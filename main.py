@@ -49,6 +49,8 @@ print(f"Saved augmented dataset to {augmented_path}")
 
 # feature engineering
 _df = augmented.copy()
+np.random.seed(42)
+_df["stress"] = np.random.randint(1, 100, size=len(_df))
 _df["cp_restecg"] = _df["cp"] * _df["restecg"]
 _df["thalach_per_age"] = _df["thalach"] / (_df["age"] + 1)
 _df["oldpeak_slope"] = _df["oldpeak"] * _df["slope"]
@@ -138,3 +140,6 @@ plt.ylabel("Importance")
 plt.tight_layout()
 plt.savefig("feature_importance.png")
 print("Saved feature importance plot to feature_importance.png")
+
+model_full.save_model("xgboost_model.json")
+print("Saved XGBoost model to xgboost_model.json")
